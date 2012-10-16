@@ -12,7 +12,7 @@ import sys
 
 def loadData(trainData, mode):       
     
-    dataForModelling = np.zeros((trainData.shape[0], 11))
+    dataForModelling = np.zeros((trainData.shape[0], 9))
     #1st column is survived
     for i in range(0,trainData.shape[0]):
         dataForModelling[i,0] = float(trainData[i,0])
@@ -28,72 +28,72 @@ def loadData(trainData, mode):
     for i in range(0, trainData.shape[0]):
         if trainData[i, 4] == "":
             dataForModelling[i, 3] = 0.0
-            dataForModelling[i, 4] = 0.0
+#            dataForModelling[i, 4] = 0.0
         else:
             dataForModelling[i, 3] = 1.0
-            dataForModelling[i, 4] = float(trainData[i, 4])
+#            dataForModelling[i, 4] = float(trainData[i, 4])
 
     #6th column: number of siblings trainData
-    dataForModelling[:, 5] = trainData[:, 5]
+#    dataForModelling[:, 5] = trainData[:, 5]
 
     #7th column: number of parents
-    dataForModelling[:, 6] = trainData[:, 6]
+#    dataForModelling[:, 6] = trainData[:, 6]
 
     #8th column: isadult <18 - 0, >=18 - 1
     for i in range(0, trainData.shape[0]):
         if trainData[i, 4].strip('') != "":
             if float(trainData[i, 4]) < 18:
-                dataForModelling[i, 7] = 0.0
+                dataForModelling[i, 4] = 0.0
             else:
-                dataForModelling[i, 7] = 1.0
+                dataForModelling[i, 4] = 1.0
         else:
         #    check male or female
             if dataForModelling[i, 2] == 0.0:
                 name = trainData[i, 2]
                 if re.match(".*master.*", name.lower()):
-                    dataForModelling[i, 7] = 0.0
+                    dataForModelling[i, 4] = 0.0
                 else:
-                    dataForModelling[i, 7] = 1.0
+                    dataForModelling[i, 4] = 1.0
             else:
                 if re.match(".*mrs.*", trainData[i, 2].lower()):
-                    dataForModelling[i, 7] = 1.0
+                    dataForModelling[i, 4] = 1.0
                 else:
-                    dataForModelling[i, 7] = 0.0
+                    dataForModelling[i, 4] = 0.0
             
     #9th column no of cabins, 10th column is deck
-    for i in range(0, trainData.shape[0]):
-        if trainData[i, 9].strip('') == "":
-            dataForModelling[i, 8] = 0.0
-            dataForModelling[i, 9] = 0.0
-        else:
-            split = trainData[i, 9].split(' ')
-            dataForModelling[i, 8] = len(split)
-            deck = split[0][0]
-            if deck == "A":
-                dataForModelling[i, 9] = 1.0
-            elif deck == "B":
-                dataForModelling[i, 9] = 2.0
-            elif deck == "C":
-                dataForModelling[i, 9] = 3.0
-            elif deck == "D":
-                dataForModelling[i, 9] = 4.0
-            elif deck == "E":
-                dataForModelling[i, 9] = 5.0
-            elif deck == "F":
-                dataForModelling[i, 9] = 6.0
-            elif deck == "G":
-                dataForModelling[i, 9] = 7.0
-            elif deck == "T":
-                dataForModelling[i, 9] = 8.0
+#    for i in range(0, trainData.shape[0]):
+#        if trainData[i, 9].strip('') == "":
+#            dataForModelling[i, 6] = 0.0
+#            dataForModelling[i, 7] = 0.0
+#        else:
+#            split = trainData[i, 9].split(' ')
+#            dataForModelling[i, 6] = len(split)
+#            deck = split[0][0]
+#            if deck == "A":
+#                dataForModelling[i, 7] = 1.0
+#            elif deck == "B":
+#                dataForModelling[i, 7] = 2.0
+#            elif deck == "C":
+#                dataForModelling[i, 7] = 3.0
+#            elif deck == "D":
+#                dataForModelling[i, 7] = 4.0
+#            elif deck == "E":
+#                dataForModelling[i, 7] = 5.0
+#            elif deck == "F":
+#                dataForModelling[i, 7] = 6.0
+#            elif deck == "G":
+#                dataForModelling[i, 7] = 7.0
+#            elif deck == "T":
+#                dataForModelling[i, 7] = 8.0
 
     # 11th column: embarked location
     for i in range(0, trainData.shape[0]):
         if trainData[i, 10].strip('') == "C": 
-            dataForModelling[i, 10] = 1.0
+            dataForModelling[i, 5] = 1.0
         elif trainData[i, 10].strip('') == "Q":
-            dataForModelling[i, 10] = 2.0
+            dataForModelling[i, 5] = 2.0
         elif trainData[i, 10].strip('') == "S":
-            dataForModelling[i, 10] = 3.0
+            dataForModelling[i, 5] = 3.0
     
     return dataForModelling
     

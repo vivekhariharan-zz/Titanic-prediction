@@ -8,7 +8,7 @@ import csv as csv
 import random
 
 def writeOutputFileWithHead(headLine, outputWriter, output):
-	outputTestFile.write(str(headLine))
+	outputWriter.write(str(headLine))
 	for line in output:
 		outputWriter.write(str(line))
 	outputWriter.close()
@@ -56,20 +56,25 @@ for i in range(0,int(numberOfLines)):
 
 trainData = []
 testData = []
+testTestData = []
 for i in range(0,len(data)):
 	if i in randomNumbersForTrain:
 		trainData.append(data[i])
 	else:
-		testData.append(data[i])
+		testTestData.append(data[i].replace('\"',''))
+		testData.append(','.join(data[i].split(',')[1::]))
 
 outputTrainFile = open("train"+str(numberOfLines),'w+')
 outputTestFile = open("test"+str(numberOfLines), 'w+')
+outputTestTestFile = open("testSolution"+str(numberOfLines), 'w+')
 
 if len(headerLine) != 0:
 	writeOutputFileWithHead(headerLine,outputTrainFile, trainData)
-	writeOutputFileWithHead(headerLine, outputTestFile, testData)
+	writeOutputFileWithHead(','.join(headerLine.split(',')[1::]), outputTestFile, testData)
+	writeOutputFile(outputTestTestFile, testTestData) 
 else:
 	writeOutputFile(outputTrainFile, trainData)
 	writeOutputFile(outputTestFile, testData)
+	writeOutputFile(outputTestTestFile, testTestData)
 
 
